@@ -42,15 +42,30 @@ export const getEventLogById = async (
 };
 
 /**
- * get All event logs
+ * get All event logs from database
  */
-export const getAllEventLogs = async (): Promise<CLEventGroup[]> => {
-  const events = await db.collection(COLLECTIONS.EVENTS_LOG).get();
+export const getAllEventLogs = async (
+  lastTime?: string,
+  limit?: number
+): Promise<CLEventGroup[]> => {
+  let eventsQuery = db
+    .collection(COLLECTIONS.EVENTS_LOG)
+    .limit(limit ? limit : 50);
+
+  if (typeof lastTime !== "undefined") {
+    eventsQuery = eventsQuery
+      .orderBy("timestamp", "desc")
+      .startAfter(parseInt(lastTime)) as FirebaseFirestore.CollectionReference<
+      FirebaseFirestore.DocumentData
+    >;
+  }
+
+  const events = await eventsQuery.get();
 
   if (events.size <= 0) {
     return Promise.reject("No event logs found");
   }
   const eventDocs: CLEventGroup[] = [];
   events.forEach((o) => eventDocs.push(o.data() as CLEventGroup));
-  return eventDocs;
+  return eventDocs.sort((a, b) => (a.timestamp > b.timestamp ? -1 : 1));
 };

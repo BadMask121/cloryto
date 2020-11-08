@@ -1,18 +1,6 @@
 import { ColonyClient } from "@colony/colony-js";
 
 import { getColonyClient } from "../../../config";
-import { getAllEventLogs } from "./events";
-
-export const getAllEvents = async () => {
-  try {
-    const events = await getAllEventLogs();
-
-    return Promise.resolve(events);
-  } catch (error) {
-    console.log(error);
-    return Promise.reject(error);
-  }
-};
 
 /**
  *

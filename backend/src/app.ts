@@ -31,7 +31,7 @@ app.use((req: Request, res: Response) => {
   res.status(403).send("Route not found").end();
 });
 
-//CRON TAB runs every 10 minutes to populate the event tables
+//CRON TAB runs every 1 minutes to populate the event tables
 schedule.scheduleJob("* * * * *", populationEventData);
 
 app.listen(PORT, () => {

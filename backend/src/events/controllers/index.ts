@@ -1,11 +1,14 @@
-import { catchError, succesRes } from "../../errors";
+import { getAllEventLogs } from "../services/query/events";
 import { Request, Response } from "express";
 
-import { getAllEvents } from "../services/query";
+import { catchError, succesRes } from "../../errors";
 
 export const getEventData = async (_req: Request, res: Response) => {
   try {
-    const eventsResult = await getAllEvents();
+    const lastTime = _req.query.lastTime as string;
+    const limit = (_req.query.limit as unknown) as number;
+
+    const eventsResult = await getAllEventLogs(lastTime, limit);
     succesRes("success", res, eventsResult);
     return;
   } catch (error) {
