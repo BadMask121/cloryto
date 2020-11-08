@@ -1,9 +1,8 @@
+import { Box } from '@chakra-ui/core';
 import { useRouter } from 'next/dist/client/router';
 import React from 'react';
 
-import { useEventContext } from '../context/Event';
 import Tags from '../tags/tags';
-import { Box } from '@chakra-ui/core';
 
 const TagName = [
   {
