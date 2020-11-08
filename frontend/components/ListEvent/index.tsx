@@ -1,7 +1,7 @@
 import { Box, Spinner, Text } from '@chakra-ui/core';
 import Axios from 'axios';
 import { useRouter } from 'next/dist/client/router';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useEventContext } from '../context/Event';
