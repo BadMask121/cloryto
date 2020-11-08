@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useEventContext } from '../context/Event';
-import { Item } from './Item';
+import { Item } from './Item/index';
 
 const ListEvent = () => {
   const { fetchEvents, events, error, loading } = useEventContext();

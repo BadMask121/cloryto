@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { EventsProvider } from '../components/context/Event';
-import ListEvent from '../components/listevent';
+import ListEvent from '../components/listevent/index';
 import ToggleSwitch from '../components/switch/switch';
 import TagWrapper from '../components/tagwrapper';
 import { GlobalStyles } from '../theme/global';
