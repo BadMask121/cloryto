@@ -49,15 +49,20 @@ const ListEvent = () => {
     }
   }, [events, query]);
 
+  const hasMore = React.useMemo(
+    () => typeof events?.[events.length - 1]?.timestamp !== 'undefined',
+    [events]
+  );
+
   return (
     <React.Fragment>
-      {loading ? (
+      {loading && !hasMore ? (
         <Loader />
       ) : !error.error ? (
         <InfiniteScroll
           dataLength={events.length} //This is important field to render the next data
           next={onNext}
-          hasMore={typeof events?.[events.length - 1]?.timestamp !== 'undefined'}
+          hasMore={hasMore}
           loader={loading ? <Loader /> : null}
           endMessage={
             <p style={{ textAlign: 'center' }}>
