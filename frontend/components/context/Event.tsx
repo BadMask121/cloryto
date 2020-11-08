@@ -1,5 +1,5 @@
 import Axios, { CancelToken } from 'axios';
-import { orderBy } from 'lodash';
+import { orderBy, uniqBy } from 'lodash';
 import qs from 'query-string';
 import React, { Reducer, useReducer } from 'react';
 
@@ -70,9 +70,9 @@ export const EventsReducer = (state, action) => {
       };
 
     case 'FETCH_PAGINATION_EVENTS':
-      const mergedEvents = [...state.events, ...action.events];
+      const mergedEvents = [...state.events, ...action.events]; //merge current pagination data to old state
+      let uniqueEvents = uniqBy(mergedEvents, 'id'); //remove duplicates
 
-      // let events = orderBy(mergedEvents, ['timestamp'], 'desc');
       return {
         ...state,
         loading: false,
@@ -80,7 +80,7 @@ export const EventsReducer = (state, action) => {
           error: false,
           message: null,
         },
-        events: mergedEvents,
+        events: uniqueEvents,
       };
 
     case 'FETCHING_EVENTS':
@@ -150,11 +150,11 @@ export const EventsProvider = ({ children }) => {
 
       let reformUrl = null;
 
-      const urlObject: Partial<{ tag: string; cursor: number }> = {};
+      const urlObject: Partial<{ event: string; lastTime: number }> = {};
 
       // add query parameters when need for the request
-      if (param?.event) urlObject.tag = param.event;
-      if (param?.lastTime) urlObject.cursor = param.lastTime;
+      if (param?.event) urlObject.event = param.event;
+      if (param?.lastTime) urlObject.lastTime = param.lastTime;
 
       reformUrl = `${ENDPOINT}?${qs.stringify(urlObject)}`; // stringify query params
 

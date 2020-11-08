@@ -51,10 +51,10 @@ export const populatePayoutClaimedEvent = async () => {
 
       if (readableFundingPotId && shortHash) {
         // check if log id / transaction hash exist already on db
-        const alreadyExistingLog = await getEventLogById(shortHash, "payments");
+        const alreadyExistingLog = await getEventLogById(shortHash);
 
         // TODO send push notification to frontend using pusher if event logged
-        if (alreadyExistingLog.length <= 0) {
+        if (!alreadyExistingLog) {
           const address = await getUserAddressFromPayment(
             readableFundingPotId,
             colonyClient
@@ -69,6 +69,7 @@ export const populatePayoutClaimedEvent = async () => {
     return true;
   } catch (error) {
     console.log(error);
+
     return false;
   }
 };

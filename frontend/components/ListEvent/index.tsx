@@ -8,15 +8,18 @@ import { useEventContext } from '../context/Event';
 import { Item } from './Item';
 
 const ListEvent = () => {
-  const { fetchEvents, events, error } = useEventContext();
+  const { fetchEvents, events, error, loading } = useEventContext();
   const { query } = useRouter();
 
   // make api call on component render
   useEffect(() => {
     const axiosSource = Axios.CancelToken.source();
-    fetchEvents({ cancelToken: axiosSource.token });
+
+    const payload = { cancelToken: axiosSource.token, event: undefined };
+    payload.event = query?.index as string;
+    fetchEvents(payload);
     return () => axiosSource.cancel();
-  }, []);
+  }, [query]);
 
   const EventsContent = React.useMemo(
     () => Array.isArray(events) && events.map((o) => <Item key={o.id} {...o} />),
@@ -43,6 +46,7 @@ const ListEvent = () => {
         <InfiniteScroll
           dataLength={events.length} //This is important field to render the next data
           next={() => {
+            console.log('next');
             if (events?.[events.length - 1]?.timestamp) {
               fetchEvents({
                 lastTime: events[events.length - 1].timestamp as number,
@@ -50,8 +54,8 @@ const ListEvent = () => {
               });
             }
           }}
-          hasMore={true}
-          loader={<Loader />}
+          hasMore={events?.[events.length - 1]?.timestamp}
+          loader={loading ? <Loader /> : null}
           endMessage={
             <p style={{ textAlign: 'center' }}>
               <b>You have seen it all</b>
@@ -73,6 +77,7 @@ const ListEvent = () => {
             borderRadius='6px'
             background='#fff'
             height='fit-content'
+            marginBottom='30px'
           >
             {EventsContent}
           </Box>

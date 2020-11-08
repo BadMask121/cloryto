@@ -1,5 +1,5 @@
-import { db } from "../../../config";
 import { CLEventGroup, CLEventTypes } from "../../../../../@types/events";
+import { db } from "../../../config";
 import { COLLECTIONS } from "../../const";
 
 /**
@@ -10,60 +10,65 @@ import { COLLECTIONS } from "../../const";
 
 export const getEventLogById = async (
   id: string,
-  type?: CLEventTypes
-): Promise<CLEventGroup[]> => {
+  _type?: CLEventTypes
+): Promise<CLEventGroup> => {
   if (!id) {
     return null;
   }
   let event = await db.collection(COLLECTIONS.EVENTS_LOG);
 
-  if (type && id) {
-    event = event
-      .where("id", "==", id)
-      .where("type", "==", type) as FirebaseFirestore.CollectionReference<
-      FirebaseFirestore.DocumentData
-    >;
-  } else {
-    event = event.where(
-      "id",
-      "==",
-      id
-    ) as FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>;
-  }
+  // if (type && id) {
+  //   event = event
+  //     .where("id", "==", id)
+  //     .where("type", "==", type) as FirebaseFirestore.CollectionReference<
+  //     FirebaseFirestore.DocumentData
+  //   >;
+  // } else {
+  //   event = event.where(
+  //     "id",
+  //     "==",
+  //     id
+  //   ) as FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>;
+  // }
 
-  const eventDoc = await event.get();
+  const eventDoc = await event.doc(id).get();
 
-  if (eventDoc.size <= 0) return [];
+  if (!eventDoc.exists) return null;
 
-  const foundEventDoc: CLEventGroup[] = [];
-  eventDoc.forEach((o) => foundEventDoc.push(o.data() as CLEventGroup));
+  // const foundEventDoc: CLEventGroup[] = [];
+  // eventDoc.forEach((o) => foundEventDoc.push(o.data() as CLEventGroup));
 
-  return foundEventDoc;
+  return eventDoc.data() as CLEventGroup;
 };
 
 /**
  * get All event logs from database
  */
-export const getAllEventLogs = async (
-  lastTime?: string,
-  limit?: number
-): Promise<CLEventGroup[]> => {
+export const getAllEventLogs = async (param?: {
+  lastTime?: string;
+  limit?: number;
+  event?: CLEventTypes;
+}): Promise<CLEventGroup[]> => {
   let eventsQuery = db
     .collection(COLLECTIONS.EVENTS_LOG)
-    .limit(limit ? limit : 50);
+    .limit(param?.limit ? param?.limit : 50);
 
-  if (typeof lastTime !== "undefined") {
+  if (typeof param?.lastTime !== "undefined") {
     eventsQuery = eventsQuery
       .orderBy("timestamp", "desc")
-      .startAfter(parseInt(lastTime)) as FirebaseFirestore.CollectionReference<
+      .startAfter(
+        parseInt(param?.lastTime)
+      ) as FirebaseFirestore.CollectionReference<
       FirebaseFirestore.DocumentData
     >;
+  } else if (typeof param?.event !== "undefined") {
+    eventsQuery = eventsQuery.where("type", "==", param?.event);
   }
 
   const events = await eventsQuery.get();
 
   if (events.size <= 0) {
-    return Promise.reject("No event logs found");
+    return [];
   }
   const eventDocs: CLEventGroup[] = [];
   events.forEach((o) => eventDocs.push(o.data() as CLEventGroup));

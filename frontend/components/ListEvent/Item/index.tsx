@@ -54,10 +54,16 @@ export const Item = (eventInfo: CLEventGroup) => {
       alignItems='center'
     >
       <Box>
-        <Image rounded='full' w='37px' h='37px' src={avatar} alt='Avatar of user' />
+        <Image
+          rounded='full'
+          w={eventInfo.type === 'payments' ? '60px' : '37px'}
+          h='37px'
+          src={avatar}
+          alt='Avatar of user'
+        />
       </Box>
       <Box marginLeft='20px'>
-        <Text fontSize='14px' fontWeight={400}>
+        <Text color='#243447' fontSize='14px' fontWeight={400}>
           {preTitle}
         </Text>
         <Text color='#A6A5B1' fontSize='12px' fontWeight={500}>

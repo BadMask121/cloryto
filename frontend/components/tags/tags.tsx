@@ -7,7 +7,7 @@ interface TagProps extends ButtonProps {
 const Tags = ({ tagName, ...props }: TagProps) => {
   return (
     <Button aria-label={tagName} as='button' className='tags' {...props}>
-      #{tagName}
+      {tagName}
     </Button>
   );
 };

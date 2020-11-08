@@ -40,13 +40,10 @@ export const populateInitialiedEvent = async () => {
 
       if (shortHash) {
         // check if log id / transaction hash exist already on db
-        const alreadyExistingLog = await getEventLogById(
-          shortHash,
-          "initialised"
-        );
+        const alreadyExistingLog = await getEventLogById(shortHash);
 
         // TODO send push notification to frontend using pusher if event logged
-        if (alreadyExistingLog.length <= 0) {
+        if (!alreadyExistingLog) {
           await addEventLog(shortHash, initialised); // add event to log
         }
       }

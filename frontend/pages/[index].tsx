@@ -1,61 +1,16 @@
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
-import { Box, ChakraProvider, Text } from '@chakra-ui/core';
-import { useRouter } from 'next/dist/client/router';
+import { Box, ChakraProvider } from '@chakra-ui/core';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { EventsProvider, useEventContext } from '../components/context/Event';
-import ListEvent from '../components/ListEvent';
+import { EventsProvider } from '../components/context/Event';
+import ListEvent from '../components/listevent';
 import ToggleSwitch from '../components/switch/switch';
-import Tags from '../components/tags/tags';
+import TagWrapper from '../components/tagwrapper';
 import { GlobalStyles } from '../theme/global';
 import { darkTheme, lightTheme } from '../theme/theme';
-
-const TagName = [
-  {
-    id: 1,
-    label: 'Role Set',
-    event: 'roleSet',
-  },
-  {
-    id: 2,
-    label: 'Initialised',
-    event: 'initialised',
-  },
-  {
-    id: 3,
-    label: 'Payout Claimed',
-    event: 'payments',
-  },
-  {
-    id: 4,
-    label: 'Domain Added',
-    event: 'domainAdded',
-  },
-];
-
-const TagWrapper = () => {
-  const { fetchEvents } = useEventContext();
-  const { replace } = useRouter();
-  return (
-    <div className='container-tagWrapper'>
-      {TagName.map(({ id, label, event }) => {
-        return (
-          <Tags
-            key={id}
-            tagName={label}
-            onClick={() => {
-              replace(`/${event}`);
-              fetchEvents({ event });
-            }}
-          />
-        );
-      })}
-    </div>
-  );
-};
 
 export default function Home() {
   const [theme, setTheme] = useState('light');
@@ -100,15 +55,16 @@ export default function Home() {
             <ToggleSwitch switchHandler={toggleTheme} />
           </Box>
 
-          <Text
+          <Box
             className='title'
             textAlign='center'
             fontSize='30px'
             fontWeight={600}
             paddingBottom='20px'
           >
-            Cloryto Ethe EventLoger
-          </Text>
+            Cloryto Ethereum Transaction Logger
+            <TagWrapper />
+          </Box>
           <ListEvent />
         </EventsProvider>
       </ChakraProvider>
