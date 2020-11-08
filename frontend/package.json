@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@babel/preset-typescript": "^7.12.1",
     "@chakra-ui/core": "^1.0.0-rc.5",
     "@pusher/push-notifications-web": "1.1.0",
     "@svgr/webpack": "^5.4.0",
@@ -17,23 +18,17 @@
     "dayjs": "^1.9.5",
     "dotenv": "8.2.0",
     "ethereum-blockies-base64": "^1.0.2",
-    "file-saver": "^2.0.2",
-    "jszip": "^3.5.0",
-    "jszip-utils": "^0.1.0",
     "lodash": "^4.17.20",
     "next": "9.5.4",
-    "pure-react-carousel": "^1.27.5",
     "pusher-js": "7.0.0",
     "query-string": "^6.13.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-infinite-scroll-component": "^5.1.0",
-    "react-player": "^2.6.2",
     "sass": "1.27.0",
     "styled-components": "5.2.0",
     "sw-precache-webpack-plugin": "1.0.0",
     "swr": "0.3.5",
-    "use-http": "1.0.15",
     "yarn": "1.22.10"
   },
   "devDependencies": {

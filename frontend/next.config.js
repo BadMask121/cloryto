@@ -3,13 +3,6 @@ const webpack = require('webpack');
 require('dotenv').config();
 
 module.exports = {
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
-  },
   webpack: (config) => {
     // Fixes npm packages that depend on `fs` module
     config.node = {
