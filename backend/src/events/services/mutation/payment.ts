@@ -1,5 +1,5 @@
 import { getLogs } from "@colony/colony-js";
-import { COLLECTIONS } from "events/const";
+import { COLLECTIONS } from "../../const";
 
 import { db, getColonyClient } from "../../../config";
 import { CLPayoutClaimed } from "../../@types/events";
