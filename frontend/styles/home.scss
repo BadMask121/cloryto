@@ -1,0 +1,144 @@
+.container {
+  min-height: 100vh;
+  max-width: 45vw;
+  margin: 0 auto;
+
+  @media screen and (max-device-width: '800px') {
+    max-width: 90vw;
+  }
+
+  @media screen and (min-device-width: '600px') and (max-device-width: '768px') {
+    max-width: 65vw;
+  }
+
+  @media screen and (min-device-width: '1024px') and (max-device-width: '1200px') {
+    max-width: 55vw;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  &-tagWrapper {
+    display: inline-block;
+    justify-content: space-between;
+    overflow-x: scroll;
+    margin-bottom: 1rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+
+    .tags {
+      max-width: fit-content;
+      text-align: center;
+      border-radius: 24px;
+      background-color: #ffffff;
+      color: #000000;
+      margin-right: 1rem;
+      margin-bottom: 10px;
+    }
+  }
+
+  &-mediaWrapper {
+    .media-container {
+      display: block;
+      contain: layout;
+      border-radius: 10px;
+      margin-bottom: 3rem;
+      box-shadow: rgba(98, 125, 152, 0.24) 0px 6px 18px;
+
+      &__contents {
+        border-radius: 10px 10px 0px 0px;
+        background-color: #141d26;
+        box-shadow: rgba(98, 125, 152, 0.24) 0px 0px 5px inset;
+        // height: 500px;
+        * > ul {
+          width: 100% !important;
+          height: 100%;
+        }
+        * > img {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: cover;
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      &__poster {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+      }
+    }
+  }
+}
+
+// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_switch
+
+.switchWrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 2rem 0;
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+
+      &:checked + .slider {
+        background-color: #ccc;
+      }
+
+      &:focus + .slider {
+        box-shadow: 0 0 1px #243447;
+      }
+
+      &:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #243447;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: '';
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+  }
+}

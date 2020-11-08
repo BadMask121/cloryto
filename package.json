@@ -1,0 +1,19 @@
+{
+  "name": "endsarsjourney",
+  "version": "1.0.0",
+  "description": "",
+  "main": "backend/dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BadMask121/endsarsjourney.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BadMask121/endsarsjourney/issues"
+  },
+  "homepage": "https://github.com/BadMask121/endsarsjourney#readme"
+}
