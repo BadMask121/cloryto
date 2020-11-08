@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Request, Response } from "express";
 import logger from "morgan";
-import cron from "node-cron";
+import schedule from "node-schedule";
 
 import { corsOption } from "./config-cors";
 import eventsRoutes from "./events/routes";
@@ -31,8 +31,9 @@ app.use((req: Request, res: Response) => {
   res.status(403).send("Route not found").end();
 });
 
-//CRON TAB
-cron.schedule("*/10 * * * *", populationEventData);
+//CRON TAB runs every 10 minutes to populate the event tables
+schedule.scheduleJob("*/10 * * * *", populationEventData);
+
 app.listen(PORT, () => {
   console.log(
     `App listening on port ${PORT} for ${process.env.NODE_ENV} environment`

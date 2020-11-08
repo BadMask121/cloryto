@@ -1,11 +1,11 @@
 import { getLogs } from "@colony/colony-js";
-import { COLLECTIONS } from "../../const";
 
-import { db, getColonyClient } from "../../../config";
+import { getColonyClient } from "../../../config";
 import { CLPayoutClaimed } from "../../@types/events";
-import { fromBigNumber } from "../../utils";
+import { fromBigNumber, getHashDate, shortenHash } from "../../utils";
 import { getUserAddressFromPayment } from "../query";
-import { getPaymentClaimedById } from "../query/payment";
+import { getEventLogById } from "../query/events";
+import { addEventLog } from "./event";
 
 export const populatePayoutClaimedEvent = async () => {
   try {
@@ -19,6 +19,10 @@ export const populatePayoutClaimedEvent = async () => {
 
     for (let i = 0; i < eventLogs.length; i++) {
       const event = eventLogs[i];
+
+      // hash to be used as payment id
+      const shortHash = shortenHash(event.transactionHash.toString());
+
       //parse each payment event to get the right data
       const parsed = colonyClient.interface.parseLog(event);
 
@@ -30,31 +34,34 @@ export const populatePayoutClaimedEvent = async () => {
         parsed.values?.fundingPotId
       ).toNumber();
 
+      const timestamp = await getHashDate(event.blockHash);
+
       const payoutClaimed: CLPayoutClaimed = {
-        userAddress: event.address,
+        type: "payments",
+        id: shortHash,
         token: parsed.values?.token,
+        userAddress: event.address,
         fundingPotId: readableFundingPotId,
         amount: readableAmount,
+        transactionHash: event.transactionHash,
         blockHash: event.blockHash,
         blockNumber: event.blockNumber,
+        timestamp,
       };
 
-      if (readableFundingPotId) {
-        const alreadyExistingPayment = await getPaymentClaimedById(
-          readableFundingPotId
-        );
+      if (readableFundingPotId && shortHash) {
+        // check if log id / transaction hash exist already on db
+        const alreadyExistingLog = await getEventLogById(shortHash, "payments");
 
-        if (!alreadyExistingPayment) {
+        // TODO send push notification to frontend using pusher if event logged
+        if (alreadyExistingLog.length <= 0) {
           const address = await getUserAddressFromPayment(
             readableFundingPotId,
             colonyClient
           );
           payoutClaimed.userAddress = address;
 
-          await db
-            .collection(COLLECTIONS.PAYMENTS_CLAIMED)
-            .doc(readableFundingPotId)
-            .set(payoutClaimed);
+          await addEventLog(shortHash, payoutClaimed); // add event to log
         }
       }
     }

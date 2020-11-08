@@ -36,7 +36,7 @@ const MAINNET_BETACOLONY_ADDRESS = process.env.MAINNET_BETACOLONY_ADDRESS;
 const MAINNET_PROJECT_ID = process.env.MAINNET_PROJECT_ID;
 
 // Get a new Infura provider (don't worry too much about this)
-const provider = new InfuraProvider("mainnet", MAINNET_PROJECT_ID);
+export const provider = new InfuraProvider("mainnet", MAINNET_PROJECT_ID);
 
 // Get a random wallet
 // You don't really need control over it, since you won't be firing any trasactions out of it
