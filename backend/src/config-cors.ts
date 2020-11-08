@@ -1,4 +1,8 @@
-const allowedOrigins = ["http://localhost:3300", "http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3300",
+  "http://localhost:3000",
+  "https://cloryto-33cb8.web.app",
+];
 
 export const corsOption = {
   origin: function (origin: any, callback: any) {

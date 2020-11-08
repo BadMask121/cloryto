@@ -8,7 +8,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@babel/preset-typescript": "^7.12.1",
     "@chakra-ui/core": "^1.0.0-rc.5",
     "@pusher/push-notifications-web": "1.1.0",
     "@svgr/webpack": "^5.4.0",
@@ -18,8 +17,10 @@
     "dayjs": "^1.9.5",
     "dotenv": "8.2.0",
     "ethereum-blockies-base64": "^1.0.2",
+    "file-saver": "^2.0.2",
     "lodash": "^4.17.20",
     "next": "9.5.4",
+    "pure-react-carousel": "^1.27.5",
     "pusher-js": "7.0.0",
     "query-string": "^6.13.5",
     "react": "16.13.1",
