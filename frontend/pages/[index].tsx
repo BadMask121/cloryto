@@ -7,7 +7,6 @@ import { ThemeProvider } from 'styled-components';
 
 import { EventsProvider } from '../components/context/Event';
 import ListEvent from '../components/listevent';
-import Item from '../components/listevent/Item';
 import ToggleSwitch from '../components/switch/switch';
 import TagWrapper from '../components/tagwrapper';
 import { GlobalStyles } from '../theme/global';
