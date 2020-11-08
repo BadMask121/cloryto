@@ -7,7 +7,7 @@ module.exports = {
   apps: [
     {
       name: "dev",
-      script: "./dist/app.js",
+      script: "./dist/backend/src/app.js",
       env: {
         NODE_ENV: "development",
         ...envs,
@@ -16,7 +16,7 @@ module.exports = {
     },
     {
       name: "prod",
-      script: "./dist/app.js",
+      script:  "./dist/backend/src/app.js",
       env: {
         NODE_ENV: "production",
         ...envs,
