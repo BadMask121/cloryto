@@ -54,7 +54,7 @@ const ListEvent = () => {
               });
             }
           }}
-          hasMore={events?.[events.length - 1]?.timestamp}
+          hasMore={typeof events?.[events.length - 1]?.timestamp !== 'undefined'}
           loader={loading ? <Loader /> : null}
           endMessage={
             <p style={{ textAlign: 'center' }}>
