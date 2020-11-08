@@ -1,7 +1,11 @@
 .container {
   min-height: 100vh;
-  max-width: 45vw;
+  max-width: 700px;
   margin: 0 auto;
+  box-shadow: 3px 5px 10px 5px rgba(62, 118, 244, 0.14);
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 5px;
 
   @media screen and (max-device-width: '800px') {
     max-width: 90vw;
@@ -38,40 +42,6 @@
       color: #000000;
       margin-right: 1rem;
       margin-bottom: 10px;
-    }
-  }
-
-  &-mediaWrapper {
-    .media-container {
-      display: block;
-      contain: layout;
-      border-radius: 10px;
-      margin-bottom: 3rem;
-      box-shadow: rgba(98, 125, 152, 0.24) 0px 6px 18px;
-
-      &__contents {
-        border-radius: 10px 10px 0px 0px;
-        background-color: #141d26;
-        box-shadow: rgba(98, 125, 152, 0.24) 0px 0px 5px inset;
-        // height: 500px;
-        * > ul {
-          width: 100% !important;
-          height: 100%;
-        }
-        * > img {
-          max-width: 100%;
-          max-height: 100%;
-          object-fit: cover;
-          height: 100%;
-          width: 100%;
-        }
-      }
-
-      &__poster {
-        display: flex;
-        justify-content: space-between;
-        padding: 1rem;
-      }
     }
   }
 }

@@ -1,7 +1,7 @@
 import { getLogs } from "@colony/colony-js";
 
 import { getColonyClient } from "../../../config";
-import { CLDomainId } from "../../@types/events";
+import { CLDomainId } from "../../../../../@types/events";
 import { fromBigNumber, getHashDate, shortenHash } from "../../utils";
 import { getEventLogById } from "../query/events";
 import { addEventLog } from "./event";

@@ -1,62 +1,54 @@
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
-import { ChakraProvider, Switch, Text } from '@chakra-ui/core';
+import { Box, ChakraProvider, Text } from '@chakra-ui/core';
+import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { TweetProvider, useTweetContext } from '../components/context/Tweet';
-import { MediaContainer } from '../components/media';
+import { TweetProvider, useEventContext } from '../components/context/Event';
+import ListEvent from '../components/ListEvent';
 import ToggleSwitch from '../components/switch/switch';
 import Tags from '../components/tags/tags';
 import { GlobalStyles } from '../theme/global';
 import { darkTheme, lightTheme } from '../theme/theme';
-import { useRouter } from 'next/dist/client/router';
 
 const TagName = [
   {
     id: 1,
-    name: 'EndSars',
+    label: 'Role Set',
+    event: 'roleSet',
   },
   {
     id: 2,
-    name: 'EndSarsProtest',
+    label: 'Initialised',
+    event: 'initialised',
   },
   {
     id: 3,
-    name: 'EndSarsNow',
+    label: 'Payout Claimed',
+    event: 'payments',
   },
   {
     id: 4,
-    name: 'EndSarsProtests',
-  },
-  {
-    id: 5,
-    name: 'EndSarsImmediately',
-  },
-  {
-    id: 6,
-    name: 'EndSARS',
-  },
-  {
-    id: 7,
-    name: 'EndPoliceBrutality',
+    label: 'Domain Added',
+    event: 'domainAdded',
   },
 ];
 
 const TagWrapper = () => {
-  const { fetchTweets } = useTweetContext();
-  const { replace, pathname } = useRouter();
+  const { fetchEvents } = useEventContext();
+  const { replace } = useRouter();
   return (
     <div className='container-tagWrapper'>
-      {TagName.map(({ id, name }) => {
+      {TagName.map(({ id, label, event }) => {
         return (
           <Tags
             key={id}
-            tagName={name}
+            tagName={label}
             onClick={() => {
-              replace(`/${name}`);
-              fetchTweets({ tag: name.replace('#', '') });
+              replace(`/${event}`);
+              fetchEvents({ event });
             }}
           />
         );
@@ -64,6 +56,7 @@ const TagWrapper = () => {
     </div>
   );
 };
+
 export default function Home() {
   const [theme, setTheme] = useState('light');
 
@@ -92,25 +85,31 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <ChakraProvider resetCSS>
+        <Head>
+          <title>Cloryto Eth Reader</title>
+          <link rel='icon' href='/favicon.ico' />
+          <link
+            href='https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600&display=swap'
+            rel='stylesheet'
+          ></link>
+        </Head>
         <TweetProvider>
           <GlobalStyles />
 
-          <div className='switchWrapper'>
+          <Box className='switchWrapper'>
             <ToggleSwitch switchHandler={toggleTheme} />
-          </div>
+          </Box>
 
-          <div className='container'>
-            <Head>
-              <title>End SARS Journey #ENDSARS</title>
-              <link rel='icon' href='/favicon.ico' />
-            </Head>
-            <Text className='title'>End Sars, The Journey!!!</Text>
-
-            <TagWrapper />
-            <div className='container-mediaWrapper'>
-              <MediaContainer />
-            </div>
-          </div>
+          <Text
+            className='title'
+            textAlign='center'
+            fontSize='30px'
+            fontWeight={600}
+            paddingBottom='20px'
+          >
+            Cloryto Ethe EventLoger
+          </Text>
+          <ListEvent />
         </TweetProvider>
       </ChakraProvider>
     </ThemeProvider>

@@ -1,4 +1,4 @@
-import { CLEventGroup } from "events/@types/events";
+import { CLEventGroup } from "../../../../../@types/events";
 import { db } from "../../../config";
 import { COLLECTIONS } from "../../const";
 

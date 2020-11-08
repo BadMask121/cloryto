@@ -1,5 +1,5 @@
 import { db } from "../../../config";
-import { CLEventGroup, CLEventTypes } from "../../@types/events";
+import { CLEventGroup, CLEventTypes } from "../../../../../@types/events";
 import { COLLECTIONS } from "../../const";
 
 /**

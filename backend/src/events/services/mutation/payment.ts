@@ -1,7 +1,7 @@
 import { getLogs } from "@colony/colony-js";
 
 import { getColonyClient } from "../../../config";
-import { CLPayoutClaimed } from "../../@types/events";
+import { CLPayoutClaimed } from "../../../../../@types/events";
 import { fromBigNumber, getHashDate, shortenHash } from "../../utils";
 import { getUserAddressFromPayment } from "../query";
 import { getEventLogById } from "../query/events";
