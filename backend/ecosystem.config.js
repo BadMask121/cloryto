@@ -12,6 +12,7 @@ module.exports = {
         NODE_ENV: "development",
         ...envs,
       },
+      watch: true,
     },
     {
       name: "prod",
@@ -20,6 +21,7 @@ module.exports = {
         NODE_ENV: "production",
         ...envs,
       },
+      watch: true,
     },
   ],
 };
