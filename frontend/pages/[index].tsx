@@ -10,7 +10,7 @@ import ToggleSwitch from '../components/switch/switch';
 import TagWrapper from '../components/tagwrapper';
 import { GlobalStyles } from '../theme/global';
 import { darkTheme, lightTheme } from '../theme/theme';
-import ListEvent from '../components/listevent';
+import ListEvent from '../components/listevent/listevent';
 
 export default function Home() {
   const [theme, setTheme] = useState('light');
