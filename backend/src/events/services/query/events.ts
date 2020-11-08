@@ -53,6 +53,9 @@ export const getAllEventLogs = async (param?: {
     .collection(COLLECTIONS.EVENTS_LOG)
     .limit(param?.limit ? param?.limit : 50);
 
+  if (typeof param?.event !== "undefined") {
+    eventsQuery = eventsQuery.where("type", "==", param?.event);
+  }
   if (typeof param?.lastTime !== "undefined") {
     eventsQuery = eventsQuery
       .orderBy("timestamp", "desc")
@@ -61,9 +64,6 @@ export const getAllEventLogs = async (param?: {
       ) as FirebaseFirestore.CollectionReference<
       FirebaseFirestore.DocumentData
     >;
-  }
-  if (typeof param?.event !== "undefined") {
-    eventsQuery = eventsQuery.where("type", "==", param?.event);
   }
 
   const events = await eventsQuery.get();
