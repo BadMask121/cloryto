@@ -40,20 +40,21 @@ const ListEvent = () => {
     </Box>
   );
 
+  const onNext = React.useCallback(() => {
+    if (events?.[events.length - 1]?.timestamp) {
+      fetchEvents({
+        lastTime: events[events.length - 1].timestamp as number,
+        event: query?.index as string,
+      });
+    }
+  }, [events, query]);
+
   return (
     <React.Fragment>
       {!error.error ? (
         <InfiniteScroll
           dataLength={events.length} //This is important field to render the next data
-          next={() => {
-            console.log('next');
-            if (events?.[events.length - 1]?.timestamp) {
-              fetchEvents({
-                lastTime: events[events.length - 1].timestamp as number,
-                event: query?.index as string,
-              });
-            }
-          }}
+          next={onNext}
           hasMore={typeof events?.[events.length - 1]?.timestamp !== 'undefined'}
           loader={loading ? <Loader /> : null}
           endMessage={
