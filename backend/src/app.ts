@@ -32,7 +32,7 @@ app.use((req: Request, res: Response) => {
 });
 
 //CRON TAB runs every 10 minutes to populate the event tables
-schedule.scheduleJob("*/10 * * * *", populationEventData);
+schedule.scheduleJob("* * * * *", populationEventData);
 
 app.listen(PORT, () => {
   console.log(

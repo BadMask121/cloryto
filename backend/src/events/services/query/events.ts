@@ -1,5 +1,5 @@
 import { db } from "../../../config";
-import { CLEventsInfo, CLEventTypes } from "../../@types/events";
+import { CLEventGroup, CLEventTypes } from "../../@types/events";
 import { COLLECTIONS } from "../../const";
 
 /**
@@ -11,7 +11,7 @@ import { COLLECTIONS } from "../../const";
 export const getEventLogById = async (
   id: string,
   type?: CLEventTypes
-): Promise<CLEventsInfo[]> => {
+): Promise<CLEventGroup[]> => {
   if (!id) {
     return null;
   }
@@ -35,8 +35,8 @@ export const getEventLogById = async (
 
   if (eventDoc.size <= 0) return [];
 
-  const foundEventDoc: CLEventsInfo[] = [];
-  eventDoc.forEach((o) => foundEventDoc.push(o.data() as CLEventsInfo));
+  const foundEventDoc: CLEventGroup[] = [];
+  eventDoc.forEach((o) => foundEventDoc.push(o.data() as CLEventGroup));
 
   return foundEventDoc;
 };
@@ -44,13 +44,13 @@ export const getEventLogById = async (
 /**
  * get All event logs
  */
-export const getAllEventLogs = async (): Promise<CLEventsInfo[]> => {
+export const getAllEventLogs = async (): Promise<CLEventGroup[]> => {
   const events = await db.collection(COLLECTIONS.EVENTS_LOG).get();
 
   if (events.size <= 0) {
     return Promise.reject("No event logs found");
   }
-  const eventDocs: CLEventsInfo[] = [];
-  events.forEach((o) => eventDocs.push(o.data() as CLEventsInfo));
+  const eventDocs: CLEventGroup[] = [];
+  events.forEach((o) => eventDocs.push(o.data() as CLEventGroup));
   return eventDocs;
 };

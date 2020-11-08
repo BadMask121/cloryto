@@ -19,7 +19,26 @@ export interface CLPayoutClaimed extends CLEventLog {
   fundingPotId: string;
   amount?: number;
 }
+export interface CLInitialied extends CLEventLog {
+  type: "initialised";
+  userAddress: string;
+  token: string;
+  message?: string;
+}
+export interface CLRoleSet extends CLEventLog {
+  type: "roleSet";
+  role: string | number;
+  userAddress: string;
+  domainId: string;
+}
+export interface CLDomainId extends CLEventLog {
+  type: "domainAdded";
+  userAddress: string;
+  domainId: string;
+}
 
-export type CLEventGroup = CLPayoutClaimed;
-
-export interface CLEventsInfo extends CLEventGroup {}
+export type CLEventGroup =
+  | CLPayoutClaimed
+  | CLInitialied
+  | CLRoleSet
+  | CLDomainId;
