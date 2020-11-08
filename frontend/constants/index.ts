@@ -1,1 +1,1 @@
-export const ENDPOINT = `http://localhost/events`;
+export const ENDPOINT = `http://localhost:8080/events`;

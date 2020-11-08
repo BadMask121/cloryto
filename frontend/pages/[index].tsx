@@ -6,7 +6,7 @@ import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { TweetProvider, useEventContext } from '../components/context/Event';
+import { EventsProvider, useEventContext } from '../components/context/Event';
 import ListEvent from '../components/ListEvent';
 import ToggleSwitch from '../components/switch/switch';
 import Tags from '../components/tags/tags';
@@ -93,7 +93,7 @@ export default function Home() {
             rel='stylesheet'
           ></link>
         </Head>
-        <TweetProvider>
+        <EventsProvider>
           <GlobalStyles />
 
           <Box className='switchWrapper'>
@@ -110,7 +110,7 @@ export default function Home() {
             Cloryto Ethe EventLoger
           </Text>
           <ListEvent />
-        </TweetProvider>
+        </EventsProvider>
       </ChakraProvider>
     </ThemeProvider>
   );

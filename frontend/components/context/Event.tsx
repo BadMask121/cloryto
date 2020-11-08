@@ -1,9 +1,10 @@
 import Axios, { CancelToken } from 'axios';
+import { orderBy } from 'lodash';
 import qs from 'query-string';
 import React, { Reducer, useReducer } from 'react';
 
-import { ENDPOINT } from '../../constants';
 import { CLEventGroup } from '../../../@types/events';
+import { ENDPOINT } from '../../constants';
 
 export type FetchType = {
   event: string;
@@ -57,6 +58,7 @@ export const FETCHING_EVENTS_FAILED = 'FETCHING_EVENTS_FAILED';
 export const EventsReducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_INITIAL_EVENTS':
+      const events = orderBy(action.events, ['timestamp'], 'desc');
       return {
         ...state,
         loading: false,
@@ -64,10 +66,13 @@ export const EventsReducer = (state, action) => {
           error: false,
           message: null,
         },
-        tweets: action.events,
+        events,
       };
 
     case 'FETCH_PAGINATION_EVENTS':
+      const mergedEvents = [...state.events, ...action.events];
+
+      // let events = orderBy(mergedEvents, ['timestamp'], 'desc');
       return {
         ...state,
         loading: false,
@@ -75,7 +80,7 @@ export const EventsReducer = (state, action) => {
           error: false,
           message: null,
         },
-        tweets: [...state.events, ...action.events],
+        events: mergedEvents,
       };
 
     case 'FETCHING_EVENTS':
@@ -107,7 +112,7 @@ export const EventsReducer = (state, action) => {
  *
  * @param param0 provider
  */
-export const TweetProvider = ({ children }) => {
+export const EventsProvider = ({ children }) => {
   const [state, dispatch] = useReducer<Reducer<IEventContext, any>>(
     EventsReducer,
     initialEventsContext,
@@ -140,10 +145,14 @@ export const TweetProvider = ({ children }) => {
    */
   const fetchEvents = React.useCallback(async (param: Partial<FetchType>) => {
     try {
+      // set loading to true
       setloading(true);
+
       let reformUrl = null;
+
       const urlObject: Partial<{ tag: string; cursor: number }> = {};
 
+      // add query parameters when need for the request
       if (param?.event) urlObject.tag = param.event;
       if (param?.lastTime) urlObject.cursor = param.lastTime;
 
@@ -151,9 +160,10 @@ export const TweetProvider = ({ children }) => {
 
       const result = await Axios.get(reformUrl, { cancelToken: param?.cancelToken });
 
-      if (!result?.data?.error && result.data?.data) {
+      if (Array.isArray(result.data?.data)) {
         const events = result.data?.data;
 
+        setloading(false);
         setEvents(events, param?.lastTime ? FETCH_PAGINATION_EVENTS : FETCH_INITIAL_EVENTS);
         return Promise.resolve(events);
       } else {

@@ -1,7 +1,7 @@
-import { getLogs } from "@colony/colony-js";
+import { ColonyRole, getLogs } from "@colony/colony-js";
 
-import { getColonyClient } from "../../../config";
 import { CLRoleSet } from "../../../../../@types/events";
+import { getColonyClient } from "../../../config";
 import { fromBigNumber, getHashDate, shortenHash } from "../../utils";
 import { getEventLogById } from "../query/events";
 import { addEventLog } from "./event";
@@ -37,7 +37,7 @@ export const populateRoleSetEvent = async () => {
         userAddress: parsed?.values?.user,
         transactionHash: event.transactionHash,
         blockHash: event.blockHash,
-        role: parsed?.values?.role,
+        role: ColonyRole[parsed?.values?.role],
         domainId: readableDomainId,
         timestamp,
       };
