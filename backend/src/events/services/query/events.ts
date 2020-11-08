@@ -61,7 +61,8 @@ export const getAllEventLogs = async (param?: {
       ) as FirebaseFirestore.CollectionReference<
       FirebaseFirestore.DocumentData
     >;
-  } else if (typeof param?.event !== "undefined") {
+  }
+  if (typeof param?.event !== "undefined") {
     eventsQuery = eventsQuery.where("type", "==", param?.event);
   }
 
